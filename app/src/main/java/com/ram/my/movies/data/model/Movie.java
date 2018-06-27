@@ -16,6 +16,7 @@ public final class Movie implements Parcelable {
     @Expose
     long id;
 
+
     @Expose @SerializedName("genre_ids")
     List<Integer> genreIds = new ArrayList<>();
 
@@ -50,6 +51,7 @@ public final class Movie implements Parcelable {
     String adult;
 
     boolean favored = false;
+    List<Genre> genres;
 
     public List<Integer> getGenreIds() {
         return genreIds;
@@ -219,5 +221,27 @@ public final class Movie implements Parcelable {
 
     }
 
+    protected Movie(Parcel in) {
+        this.id = in.readLong();
+        this.genreIds = new ArrayList<Integer>();
+        in.readList(this.genreIds, List.class.getClassLoader());
+        this.overview = in.readString();
+        this.releaseDate = in.readString();
+        this.posterPath = in.readString();
+        this.backdropPath = in.readString();
+        this.popularity = in.readDouble();
+        this.title = in.readString();
+        this.voteAverage = in.readDouble();
+        this.voteCount = in.readLong();
+        this.language = in.readString();
+        this.adult = in.readString();
+        this.favored = in.readByte() != 0;
 
+    }
+
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        public Movie createFromParcel(Parcel source) {return new Movie(source);}
+
+        public Movie[] newArray(int size) {return new Movie[size];}
+    };
 }
