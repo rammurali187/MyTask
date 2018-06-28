@@ -54,10 +54,8 @@ public class ViewPagerAdapter extends PagerAdapter {
             Button btnlanguage = findById(view, R.id.btnlanguage);
             btnlanguage.setText(positontwo[0]);
             Button btnadult = findById(view, R.id.btnadult);
-            if(positontwo[1].equalsIgnoreCase("true"))
-                btnadult.setText("YES");
-            else
-                btnadult.setText("NO");
+            btnadult.setText(positontwo[1].equalsIgnoreCase("true")?"YES":"NO");
+
 
         }
         ViewPager vp = (ViewPager) container;
