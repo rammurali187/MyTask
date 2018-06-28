@@ -10,12 +10,9 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.Transformation;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -33,6 +30,7 @@ import com.ram.my.movies.data.repository.MoviesRepository;
 import com.ram.my.movies.ui.activity.DetailsActivity;
 import com.ram.my.movies.ui.helper.MoviesHelper;
 import com.ram.my.movies.ui.module.MoviesModule;
+import com.ram.my.movies.utils.CollapseExpand;
 import com.ram.my.movies.utils.Lists;
 import com.ram.my.movies.utils.UiUtils;
 
@@ -103,6 +101,7 @@ public final class MovieFragment extends BaseFragment implements ObservableScrol
     @Inject
     MoviesRepository mMoviesRepository;
 
+    private CollapseExpand collapseexpand;
     private MoviesHelper mHelper;
     private CompositeSubscription mSubscriptions;
     private List<Runnable> mDeferredUiOperations = new ArrayList<>();
@@ -125,6 +124,7 @@ public final class MovieFragment extends BaseFragment implements ObservableScrol
         super.onAttach(activity);
         setHasOptionsMenu(true);
         mHelper = new MoviesHelper(activity, mMoviesRepository);
+        collapseexpand = new CollapseExpand();
     }
 
     @Override
@@ -256,10 +256,10 @@ public final class MovieFragment extends BaseFragment implements ObservableScrol
 
         overview_collapse.setOnClickListener(v -> {
             if (overview_collapse.getText().toString().equalsIgnoreCase("EXPAND")) {
-                expand(mOverview);
+                collapseexpand.expand(mOverview);
                 overview_collapse.setText("COLLAPSE");
             } else {
-                collapse(mOverview);
+                collapseexpand.collapse(mOverview);
                 overview_collapse.setText("EXPAND");
             }
         });
@@ -416,57 +416,4 @@ public final class MovieFragment extends BaseFragment implements ObservableScrol
         return Collections.<Object>singletonList(new MoviesModule());
     }
 
-    public static void expand(final TextView v) {
-        v.measure(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        final int targetHeight = v.getMeasuredHeight();
-
-        // Older versions of android (pre API 21) cancel animations for views with a height of 0.
-        v.getLayoutParams().height = 1;
-        v.setMaxLines(Integer.MAX_VALUE);
-        //v.setVisibility(View.VISIBLE);
-        Animation a = new Animation()
-        {
-            @Override
-            protected void applyTransformation(float interpolatedTime, Transformation t) {
-                v.getLayoutParams().height =  LinearLayout.LayoutParams.WRAP_CONTENT;
-                v.requestLayout();
-            }
-
-            @Override
-            public boolean willChangeBounds() {
-                return true;
-            }
-        };
-
-        // 1dp/ms
-        a.setDuration((int)(targetHeight / v.getContext().getResources().getDisplayMetrics().density));
-        v.startAnimation(a);
-    }
-
-    public static void collapse(final TextView v) {
-        final int initialHeight = v.getMeasuredHeight();
-
-        Animation a = new Animation()
-        {
-            @Override
-            protected void applyTransformation(float interpolatedTime, Transformation t) {
-                if(interpolatedTime == 1){
-                    v.setMaxLines(3);
-                }else{
-                    v.setMaxLines(Integer.MAX_VALUE);
-                    v.getLayoutParams().height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                    v.requestLayout();
-                }
-            }
-
-            @Override
-            public boolean willChangeBounds() {
-                return true;
-            }
-        };
-
-        // 1dp/ms
-        a.setDuration((int)(initialHeight / v.getContext().getResources().getDisplayMetrics().density));
-        v.startAnimation(a);
-    }
 }
