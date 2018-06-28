@@ -5,14 +5,15 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -67,6 +68,10 @@ public final class MovieFragment extends BaseFragment implements ObservableScrol
     @Bind(R.id.movie_cover_container)
     FrameLayout mCoverContainer;
 
+    @Bind(R.id.movie_flipper_container)
+    ViewPager mpagerContainer;
+    @Bind(R.id.SliderDots)
+    LinearLayout mSliderDots;
     @Bind(R.id.movie_title)
     TextView mTitle;
     @Bind(R.id.movie_genre)
@@ -85,12 +90,7 @@ public final class MovieFragment extends BaseFragment implements ObservableScrol
     TextView txt_release;
     @Bind(R.id.overview_collapse)
     TextView overview_collapse;
-    @Bind(R.id.btnreleasedate)
-    Button btnreleasedate;
-    @Bind(R.id.btnstar)
-    Button btnstar;
-    @Bind(R.id.btnlanguage)
-    Button btnlanguage;
+
 
 
     @BindColor(R.color.theme_primary)
@@ -100,7 +100,7 @@ public final class MovieFragment extends BaseFragment implements ObservableScrol
 
     @Inject
     MoviesRepository mMoviesRepository;
-
+    private com.ram.my.movies.utils.ViewPager viewpager;
     private CollapseExpand collapseexpand;
     private MoviesHelper mHelper;
     private CompositeSubscription mSubscriptions;
@@ -109,6 +109,7 @@ public final class MovieFragment extends BaseFragment implements ObservableScrol
     private List<Review> mReviews;
     private List<Video> mVideos;
     private Video mTrailer;
+
 
     public static MovieFragment newInstance(Movie movie) {
         Bundle args = new Bundle();
@@ -247,9 +248,10 @@ public final class MovieFragment extends BaseFragment implements ObservableScrol
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        btnreleasedate.setText(UiUtils.getDisplayReleaseDate(mMovie.getReleaseDate()));
-        btnlanguage.setText(mMovie.getLanguage());
-        btnstar.setText(String.valueOf(mMovie.getVoteCount()));
+
+        viewpager = new com.ram.my.movies.utils.ViewPager(getActivity(),mpagerContainer,mSliderDots);
+        viewpager.viewpagerinit(new String[] {UiUtils.getDisplayReleaseDate(mMovie.getReleaseDate()),String.valueOf(mMovie.getVoteCount())},new String[] {mMovie.getLanguage(),mMovie.getAdult()});
+
 
         txt_release.setText(isrelaesed);
         mOverview.setText(mMovie.getOverview());
@@ -415,5 +417,6 @@ public final class MovieFragment extends BaseFragment implements ObservableScrol
     protected List<Object> getModules() {
         return Collections.<Object>singletonList(new MoviesModule());
     }
+
 
 }

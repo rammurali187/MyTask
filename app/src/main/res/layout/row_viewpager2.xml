@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:gravity="center_vertical|center"
+    >
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:id="@+id/btnlanguage"
+        android:drawablePadding="10dp"
+        android:drawableTop="@drawable/language"
+        android:background="@color/transparent"
+        android:textColor="@color/white"
+        android:padding="10dp"
+        android:textAllCaps="false"
+        android:text="28/10/2018"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
+        android:id="@+id/btnadult"
+        android:drawablePadding="10dp"
+        android:drawableTop="@drawable/adult"
+        android:background="@color/transparent"
+        android:textColor="@color/white"
+        android:padding="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="1234"
+        android:textAllCaps="false"
+        />
+
+
+</LinearLayout>
