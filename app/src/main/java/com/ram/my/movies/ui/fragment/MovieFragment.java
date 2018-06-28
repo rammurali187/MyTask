@@ -250,7 +250,7 @@ public final class MovieFragment extends BaseFragment implements ObservableScrol
         }
 
         viewpager = new com.ram.my.movies.utils.ViewPager(getActivity(),mpagerContainer,mSliderDots);
-        viewpager.viewpagerinit(new String[] {UiUtils.getDisplayReleaseDate(mMovie.getReleaseDate()),String.valueOf(mMovie.getVoteCount())},new String[] {mMovie.getLanguage(),mMovie.getAdult()});
+        viewpager.viewpagerinit(new String[] {UiUtils.getDisplayReleaseDate(mMovie.getReleaseDate()),String.valueOf(mMovie.getVoteCount()),mMovie.getLanguage()},new String[] {mMovie.getAdult()});
 
 
         txt_release.setText(isrelaesed);

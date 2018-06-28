@@ -48,13 +48,13 @@ public class ViewPagerAdapter extends PagerAdapter {
             btnreleasedate.setText(positionone[0]);
             Button btnstar = findById(view, R.id.btnstar);
             btnstar.setText(positionone[1]);
+            Button btnlanguage = findById(view, R.id.btnlanguage);
+            btnlanguage.setText(positionone[2]);
         }else
         {
             view = layoutInflater.inflate(R.layout.row_viewpager2, null);
-            Button btnlanguage = findById(view, R.id.btnlanguage);
-            btnlanguage.setText(positontwo[0]);
             Button btnadult = findById(view, R.id.btnadult);
-            btnadult.setText(positontwo[1].equalsIgnoreCase("true")?"YES":"NO");
+            btnadult.setText(positontwo[0].equalsIgnoreCase("true")?"YES":"NO");
 
 
         }

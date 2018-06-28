@@ -3,21 +3,10 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    android:gravity="center_vertical|center"
+    android:gravity="center_vertical|left"
     >
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:id="@+id/btnlanguage"
-        android:drawablePadding="10dp"
-        android:drawableTop="@drawable/language"
-        android:background="@color/transparent"
-        android:textColor="@color/white"
-        android:padding="10dp"
-        android:textAllCaps="false"
-        android:text="28/10/2018"
-        />
+
 
     <Button
         android:layout_width="wrap_content"
